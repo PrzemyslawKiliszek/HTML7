@@ -2,270 +2,267 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Chatelier · 4 Spalten mit Reaktionssymbolen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Le Chatelier · kompakt · mobil</title>
     <style>
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
         }
         body {
-            background: linear-gradient(145deg, #124457 0%, #0b2f3d 100%);
+            background: #0f3f50;
             min-height: 100vh;
-            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 8px;
         }
-        .main-card {
-            max-width: 1200px;
+        .mobil-karte {
+            max-width: 480px;
             width: 100%;
-            background: #ecf4f9;
-            border-radius: 70px 70px 60px 60px;
-            padding: 30px 25px 40px;
-            box-shadow: 0 30px 35px rgba(0, 20, 25, 0.7), inset 0 2px 8px #c2dae6;
+            background: #e5f0f5;
+            border-radius: 40px 40px 35px 35px;
+            padding: 18px 12px 25px;
+            box-shadow: 0 20px 25px rgba(0,15,20,0.7), inset 0 1px 5px white;
         }
         h1 {
-            margin: 0 0 5px 0;
-            font-weight: 600;
-            font-size: 2.5rem;
-            color: #002d3b;
+            font-size: 1.7rem;
+            color: #003542;
             display: flex;
             align-items: center;
-            gap: 20px;
-            padding-left: 15px;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+            padding-left: 5px;
         }
         .h1-sub {
-            background: #1b6379;
+            background: #196277;
             color: white;
-            font-size: 1.2rem;
-            padding: 6px 28px;
-            border-radius: 50px;
+            font-size: 0.9rem;
+            padding: 4px 14px;
+            border-radius: 30px;
         }
 
-        /* === Reaktionskopf MIT Symbolen über den 4 Spalten === */
-        .reaktionskopf {
+        /* Reaktionszeile - alles in EINER Reihe (auch auf klein) */
+        .reaktions-reihe {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            background: #9fc9db;
-            padding: 25px 20px;
-            border-radius: 70px;
-            margin: 30px 0 15px 0;
-            box-shadow: 0 7px 0 #487a8d;
+            gap: 5px;
+            background: #95c2d4;
+            padding: 10px 6px;
+            border-radius: 50px;
+            margin: 12px 0 12px 0;
+            box-shadow: 0 4px 0 #3d7388;
             flex-wrap: wrap;
         }
-        .kopf-item {
-            font-size: 2.5rem;
+        .reihe-item {
+            font-size: 1.2rem;
             font-weight: 700;
-            background: #fff3da;
-            padding: 10px 35px;
-            border-radius: 60px;
-            box-shadow: inset 0 -5px 0 #af8f58;
-            text-align: center;
-            min-width: 120px;
+            background: #fef5e1;
+            padding: 6px 14px;
+            border-radius: 40px;
+            box-shadow: inset 0 -3px 0 #b1945a;
+            white-space: nowrap;
         }
-        .kopf-symbol {
-            font-size: 3.2rem;
+        .reihe-symbol {
+            font-size: 1.6rem;
             font-weight: 500;
-            color: #022d39;
-            filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.2));
+            color: #012b36;
         }
 
-        /* Container für die vier Kugelspalten (vertikal) */
-        .vier-spalten {
+        /* Vier kompakte Spalten nebeneinander */
+        .spalten-row {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            background: #19566d;
-            border-radius: 80px;
-            padding: 30px 15px;
-            margin: 5px 0 25px;
-            box-shadow: inset 0 0 0 4px #86b6c7, 0 18px 20px rgba(0,0,0,0.4);
-            flex-wrap: wrap;
+            gap: 6px;
+            background: #195067;
+            border-radius: 35px;
+            padding: 15px 6px;
+            box-shadow: inset 0 0 0 3px #79aebe, 0 12px 15px rgba(0,0,0,0.4);
+            margin-bottom: 12px;
         }
-
-        .spalte {
+        .mini-spalte {
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: 130px;
-            background: rgba(0,0,0,0.1);
-            border-radius: 60px;
-            padding: 20px 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 12px 3px;
+            flex: 1;
+            min-width: 0; /* wichtig für Flex auf engem Raum */
         }
         .spalten-label {
-            font-size: 2rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            background: #ddf1fb;
-            padding: 8px 30px;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            color: #013845;
-            box-shadow: 0 4px 0 #35748b;
+            background: #d1ecf7;
+            padding: 4px 0px;
             width: 100%;
             text-align: center;
+            border-radius: 30px;
+            margin-bottom: 10px;
+            color: #023946;
+            box-shadow: 0 3px 0 #35748b;
         }
         .kugel-stapel {
             display: flex;
-            flex-direction: column-reverse;  /* Kugeln wachsen nach oben */
+            flex-direction: column-reverse;
             align-items: center;
-            gap: 6px;
-            min-height: 320px;
+            gap: 3px;
+            min-height: 150px;
             justify-content: flex-start;
-            background: rgba(255,255,250,0.2);
-            border-radius: 50px;
-            padding: 15px 8px;
-            width: 85px;
+            background: rgba(0,0,0,0.15);
+            border-radius: 30px;
+            padding: 10px 3px;
+            width: 100%;
         }
 
         .kugel {
-            width: 58px;
-            height: 58px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            box-shadow: 0 7px 0 rgba(0, 0, 0, 0.25), 0 0 0 3px white;
-            transition: all 0.1s;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25), 0 0 0 2px white;
             flex-shrink: 0;
         }
-        .kugel.HAc { background-color: #c95f2b; }  /* Essigsäure */
-        .kugel.H2O { background-color: #f7d973; }  /* Wasser */
-        .kugel.Ac  { background-color: #409d87; }  /* Acetat */
-        .kugel.H3O { background-color: #3f7fb0; }  /* Hydronium */
+        .kugel.HAc { background-color: #c95f2b; }
+        .kugel.H2O { background-color: #f7d973; }
+        .kugel.Ac  { background-color: #409d87; }
+        .kugel.H3O { background-color: #3f7fb0; }
 
-        .zaehler-text {
-            margin-top: 20px;
-            font-size: 1.6rem;
-            background: #154e60;
+        .zaehler {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            background: #124c5e;
             color: white;
-            padding: 5px 30px;
-            border-radius: 40px;
+            padding: 3px 10px;
+            border-radius: 30px;
             font-weight: 600;
+            width: 100%;
+            text-align: center;
         }
 
-        .steuerpanel {
+        /* Button-Panel - kompakt und scrollbar falls nötig */
+        .button-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 8px;
             justify-content: center;
-            margin: 25px 0 20px;
+            margin: 12px 0 12px;
         }
-        .btn {
+        .btn-mobil {
             border: none;
-            border-radius: 50px;
-            padding: 14px 22px;
-            font-size: 1.2rem;
+            border-radius: 40px;
+            padding: 10px 12px;
+            font-size: 1rem;
             font-weight: 600;
             background: white;
-            box-shadow: 0 5px 0 0 #6f95a5, 0 7px 12px rgba(0,30,30,0.5);
+            box-shadow: 0 4px 0 0 #698f9e;
             display: flex;
             align-items: center;
-            gap: 10px;
-            transition: 0.06s;
+            gap: 6px;
+            transition: 0.05s;
             cursor: pointer;
-            border: 2px solid transparent;
-        }
-        .btn:active {
-            transform: translateY(5px);
-            box-shadow: 0 2px 0 0 #507987, 0 4px 8px rgba(0,0,0,0.3);
-        }
-        .btn.zugabe { background: #d0f0cc; color: #1f6840; }
-        .btn.entnahme { background: #fbd1d1; color: #b13b3b; }
-
-        .reset-container {
-            display: flex;
+            flex: 1 0 auto;
+            min-width: 75px;
             justify-content: center;
-            margin: 20px 0 0;
+            border: 1px solid rgba(255,255,255,0.5);
         }
-        .reset-btn {
+        .btn-mobil:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 0 #4a6f7e;
+        }
+        .zugabe-mobil { background: #d2efcd; color: #1a653a; }
+        .entnahme-mobil { background: #fbd4d4; color: #b13b3b; }
+
+        .reset-mobil {
             background: #fedb9f;
             border: none;
-            font-size: 1.6rem;
-            padding: 16px 60px;
-            border-radius: 70px;
+            font-size: 1.3rem;
+            padding: 14px 25px;
+            border-radius: 60px;
             font-weight: 600;
-            box-shadow: 0 7px 0 #b48d56;
+            box-shadow: 0 5px 0 #b48d56;
             cursor: pointer;
+            width: 100%;
             transition: 0.05s;
         }
-        .reset-btn:active {
-            transform: translateY(7px);
+        .reset-mobil:active {
+            transform: translateY(5px);
             box-shadow: none;
         }
-
-        .fussnote {
+        .fuss-mobil {
             text-align: center;
-            font-size: 1.2rem;
-            margin-top: 25px;
-            color: #0f485a;
+            font-size: 0.9rem;
+            color: #0c4b5d;
             font-weight: 550;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-<div class="main-card">
+<div class="mobil-karte">
     <h1>
-        ⚖️ Le Chatelier · HAc + H₂O ⇌ Ac⁻ + H₃O⁺
-        <span class="h1-sub">Kugeln in 4 Spalten</span>
+        ⚖️ Le Chatelier
+        <span class="h1-sub">Essigsäure</span>
     </h1>
 
-    <!-- Reaktionssymbole ÜBER den vier Spalten (Plus und Gleichgewicht) -->
-    <div class="reaktionskopf">
-        <div class="kopf-item">HAc</div>
-        <div class="kopf-symbol">+</div>
-        <div class="kopf-item">H₂O</div>
-        <div class="kopf-symbol">⇌</div>
-        <div class="kopf-item">Ac⁻</div>
-        <div class="kopf-symbol">+</div>
-        <div class="kopf-item">H₃O⁺</div>
+    <!-- Reaktionszeile: alles in einer Reihe (auch auf Handy) -->
+    <div class="reaktions-reihe">
+        <span class="reihe-item">HAc</span>
+        <span class="reihe-symbol">+</span>
+        <span class="reihe-item">H₂O</span>
+        <span class="reihe-symbol">⇌</span>
+        <span class="reihe-item">Ac⁻</span>
+        <span class="reihe-symbol">+</span>
+        <span class="reihe-item">H₃O⁺</span>
     </div>
 
-    <!-- Vier vertikale Spalten für die Kugeln (genau unter den Symbolen) -->
-    <div class="vier-spalten">
-        <!-- Spalte 1: HAc -->
-        <div class="spalte">
+    <!-- Vier Spalten (kompakt nebeneinander) -->
+    <div class="spalten-row">
+        <!-- Spalte HAc -->
+        <div class="mini-spalte">
             <div class="spalten-label">HAc</div>
             <div class="kugel-stapel" id="stapelHAc"></div>
-            <div class="zaehler-text" id="zaehlerHAc">0</div>
+            <div class="zaehler" id="zaehlerHAc">0</div>
         </div>
-        <!-- Spalte 2: H2O -->
-        <div class="spalte">
+        <!-- Spalte H2O -->
+        <div class="mini-spalte">
             <div class="spalten-label">H₂O</div>
             <div class="kugel-stapel" id="stapelH2O"></div>
-            <div class="zaehler-text" id="zaehlerH2O">0</div>
+            <div class="zaehler" id="zaehlerH2O">0</div>
         </div>
-        <!-- Spalte 3: Ac⁻ -->
-        <div class="spalte">
+        <!-- Spalte Ac⁻ -->
+        <div class="mini-spalte">
             <div class="spalten-label">Ac⁻</div>
             <div class="kugel-stapel" id="stapelAc"></div>
-            <div class="zaehler-text" id="zaehlerAc">0</div>
+            <div class="zaehler" id="zaehlerAc">0</div>
         </div>
-        <!-- Spalte 4: H3O⁺ -->
-        <div class="spalte">
+        <!-- Spalte H3O⁺ -->
+        <div class="mini-spalte">
             <div class="spalten-label">H₃O⁺</div>
             <div class="kugel-stapel" id="stapelH3O"></div>
-            <div class="zaehler-text" id="zaehlerH3O">0</div>
+            <div class="zaehler" id="zaehlerH3O">0</div>
         </div>
     </div>
 
-    <!-- Steuerung: Zugabe / Entnahme pro Teilchen -->
-    <div class="steuerpanel">
-        <button class="btn zugabe" id="addHAc">➕ HAc</button>
-        <button class="btn zugabe" id="addH2O">➕ H₂O</button>
-        <button class="btn zugabe" id="addAc">➕ Ac⁻</button>
-        <button class="btn zugabe" id="addH3O">➕ H₃O⁺</button>
-        <button class="btn entnahme" id="removeHAc">➖ HAc</button>
-        <button class="btn entnahme" id="removeH2O">➖ H₂O</button>
-        <button class="btn entnahme" id="removeAc">➖ Ac⁻</button>
-        <button class="btn entnahme" id="removeH3O">➖ H₃O⁺</button>
+    <!-- Button-Panel: Zugabe / Entnahme (8 Buttons kompakt) -->
+    <div class="button-grid">
+        <button class="btn-mobil zugabe-mobil" id="addHAc">➕HAc</button>
+        <button class="btn-mobil zugabe-mobil" id="addH2O">➕H₂O</button>
+        <button class="btn-mobil zugabe-mobil" id="addAc">➕Ac⁻</button>
+        <button class="btn-mobil zugabe-mobil" id="addH3O">➕H₃O⁺</button>
+        <button class="btn-mobil entnahme-mobil" id="removeHAc">➖HAc</button>
+        <button class="btn-mobil entnahme-mobil" id="removeH2O">➖H₂O</button>
+        <button class="btn-mobil entnahme-mobil" id="removeAc">➖Ac⁻</button>
+        <button class="btn-mobil entnahme-mobil" id="removeH3O">➖H₃O⁺</button>
     </div>
 
-    <div class="reset-container">
-        <button class="reset-btn" id="resetBtn">↺ Start: 10 · 10 · 5 · 5</button>
-    </div>
-    <div class="fussnote">
-        ⚖️ K<sub>c</sub> = 0.25 · Jede Störung verschiebt das Gleichgewicht (Le Chatelier)
+    <!-- Reset-Button groß genug -->
+    <button class="reset-mobil" id="resetBtn">↺ Start (10,10,5,5)</button>
+    <div class="fuss-mobil">
+        K<sub>c</sub> = 0.25 · Jede Störung → neues Gleichgewicht
     </div>
 </div>
 
@@ -284,116 +281,116 @@
             return Math.max(0, Math.round(x));
         }
 
-        // Alle vier Stapel aktualisieren
+        // Alle vier Stapel rendern (mit maximal 15 Kugeln aus Platzgründen)
         function rendereAlle() {
-            // HAc
+            // HAc Stapel
             const stapelHAc = document.getElementById('stapelHAc');
             stapelHAc.innerHTML = '';
             const hacRound = runden(nHAc);
-            for (let i = 0; i < Math.min(hacRound, 30); i++) {
+            for (let i = 0; i < Math.min(hacRound, 15); i++) {
                 let k = document.createElement('div');
                 k.className = 'kugel HAc';
                 stapelHAc.appendChild(k);
             }
-            if (hacRound > 30) {
+            if (hacRound > 15) {
                 let mehr = document.createElement('div');
-                mehr.textContent = '+' + (hacRound - 30);
-                mehr.style.fontSize = '1.4rem';
-                mehr.style.background = '#222e';
+                mehr.textContent = '+' + (hacRound - 15);
+                mehr.style.fontSize = '1rem';
+                mehr.style.background = '#222d';
                 mehr.style.color = 'white';
-                mehr.style.padding = '4px 14px';
-                mehr.style.borderRadius = '30px';
-                mehr.style.marginTop = '8px';
+                mehr.style.padding = '3px 8px';
+                mehr.style.borderRadius = '20px';
+                mehr.style.marginTop = '4px';
                 stapelHAc.appendChild(mehr);
             } else if (hacRound === 0) {
                 let leer = document.createElement('div');
-                leer.textContent = '⛔';
-                leer.style.fontSize = '2.2rem';
-                leer.style.color = '#ccc';
+                leer.textContent = '⚫';
+                leer.style.fontSize = '1.5rem';
+                leer.style.opacity = '0.5';
                 stapelHAc.appendChild(leer);
             }
             document.getElementById('zaehlerHAc').innerText = hacRound;
 
-            // H2O
+            // H2O Stapel
             const stapelH2O = document.getElementById('stapelH2O');
             stapelH2O.innerHTML = '';
             const h2oRound = runden(nH2O);
-            for (let i = 0; i < Math.min(h2oRound, 30); i++) {
+            for (let i = 0; i < Math.min(h2oRound, 15); i++) {
                 let k = document.createElement('div');
                 k.className = 'kugel H2O';
                 stapelH2O.appendChild(k);
             }
-            if (h2oRound > 30) {
+            if (h2oRound > 15) {
                 let mehr = document.createElement('div');
-                mehr.textContent = '+' + (h2oRound - 30);
-                mehr.style.fontSize = '1.4rem';
-                mehr.style.background = '#222e';
+                mehr.textContent = '+' + (h2oRound - 15);
+                mehr.style.fontSize = '1rem';
+                mehr.style.background = '#222d';
                 mehr.style.color = 'white';
-                mehr.style.padding = '4px 14px';
-                mehr.style.borderRadius = '30px';
-                mehr.style.marginTop = '8px';
+                mehr.style.padding = '3px 8px';
+                mehr.style.borderRadius = '20px';
+                mehr.style.marginTop = '4px';
                 stapelH2O.appendChild(mehr);
             } else if (h2oRound === 0) {
                 let leer = document.createElement('div');
-                leer.textContent = '⛔';
-                leer.style.fontSize = '2.2rem';
-                leer.style.color = '#ccc';
+                leer.textContent = '⚫';
+                leer.style.fontSize = '1.5rem';
+                leer.style.opacity = '0.5';
                 stapelH2O.appendChild(leer);
             }
             document.getElementById('zaehlerH2O').innerText = h2oRound;
 
-            // Ac⁻
+            // Ac⁻ Stapel
             const stapelAc = document.getElementById('stapelAc');
             stapelAc.innerHTML = '';
             const acRound = runden(nAc);
-            for (let i = 0; i < Math.min(acRound, 30); i++) {
+            for (let i = 0; i < Math.min(acRound, 15); i++) {
                 let k = document.createElement('div');
                 k.className = 'kugel Ac';
                 stapelAc.appendChild(k);
             }
-            if (acRound > 30) {
+            if (acRound > 15) {
                 let mehr = document.createElement('div');
-                mehr.textContent = '+' + (acRound - 30);
-                mehr.style.fontSize = '1.4rem';
-                mehr.style.background = '#222e';
+                mehr.textContent = '+' + (acRound - 15);
+                mehr.style.fontSize = '1rem';
+                mehr.style.background = '#222d';
                 mehr.style.color = 'white';
-                mehr.style.padding = '4px 14px';
-                mehr.style.borderRadius = '30px';
-                mehr.style.marginTop = '8px';
+                mehr.style.padding = '3px 8px';
+                mehr.style.borderRadius = '20px';
+                mehr.style.marginTop = '4px';
                 stapelAc.appendChild(mehr);
             } else if (acRound === 0) {
                 let leer = document.createElement('div');
-                leer.textContent = '⛔';
-                leer.style.fontSize = '2.2rem';
-                leer.style.color = '#ccc';
+                leer.textContent = '⚫';
+                leer.style.fontSize = '1.5rem';
+                leer.style.opacity = '0.5';
                 stapelAc.appendChild(leer);
             }
             document.getElementById('zaehlerAc').innerText = acRound;
 
-            // H3O⁺
+            // H3O⁺ Stapel
             const stapelH3O = document.getElementById('stapelH3O');
             stapelH3O.innerHTML = '';
             const h3oRound = runden(nH3O);
-            for (let i = 0; i < Math.min(h3oRound, 30); i++) {
+            for (let i = 0; i < Math.min(h3oRound, 15); i++) {
                 let k = document.createElement('div');
                 k.className = 'kugel H3O';
                 stapelH3O.appendChild(k);
             }
-            if (h3oRound > 30) {
+            if (h3oRound > 15) {
                 let mehr = document.createElement('div');
-                mehr.textContent = '+' + (h3oRound - 30);
-                mehr.style.fontSize = '1.4rem';
-                mehr.style.background = '#222e';
+                mehr.textContent = '+' + (h3oRound - 15);
+                mehr.style.fontSize = '1rem';
+                mehr.style.background = '#222d';
                 mehr.style.color = 'white';
-                mehr.style.padding = '4px 14px';
-                mehr.style.borderRadius = '30px';
-                mehr.style.marginTop = '8px';
+                mehr.style.padding = '3px 8px';
+                mehr.style.borderRadius = '20px';
+                mehr.style.marginTop = '4px';
                 stapelH3O.appendChild(mehr);
             } else if (h3oRound === 0) {
                 let leer = document.createElement('div');
-                leer.textContent = '⛔';
-                leer.style.fontSize = '2.2rem';
-                leer.style.color = '#ccc';
+                leer.textContent = '⚫';
+                leer.style.fontSize = '1.5rem';
+                leer.style.opacity = '0.5';
                 stapelH3O.appendChild(leer);
             }
             document.getElementById('zaehlerH3O').innerText = h3oRound;
@@ -452,30 +449,30 @@
             rendereAlle();
         }
 
-        // Event Listener
+        // --- Event Listener ---
         document.getElementById('addHAc').addEventListener('click', () => {
-            anwendenStörung((s) => { s.HAc += 4.0; });
+            anwendenStörung((s) => { s.HAc += 3.0; });
         });
         document.getElementById('addH2O').addEventListener('click', () => {
-            anwendenStörung((s) => { s.H2O += 4.0; });
+            anwendenStörung((s) => { s.H2O += 3.0; });
         });
         document.getElementById('addAc').addEventListener('click', () => {
-            anwendenStörung((s) => { s.Ac += 4.0; });
+            anwendenStörung((s) => { s.Ac += 3.0; });
         });
         document.getElementById('addH3O').addEventListener('click', () => {
-            anwendenStörung((s) => { s.H3O += 4.0; });
+            anwendenStörung((s) => { s.H3O += 3.0; });
         });
         document.getElementById('removeHAc').addEventListener('click', () => {
-            anwendenStörung((s) => { s.HAc = Math.max(0.2, s.HAc - 3.5); });
+            anwendenStörung((s) => { s.HAc = Math.max(0.2, s.HAc - 2.8); });
         });
         document.getElementById('removeH2O').addEventListener('click', () => {
-            anwendenStörung((s) => { s.H2O = Math.max(0.2, s.H2O - 3.5); });
+            anwendenStörung((s) => { s.H2O = Math.max(0.2, s.H2O - 2.8); });
         });
         document.getElementById('removeAc').addEventListener('click', () => {
-            anwendenStörung((s) => { s.Ac = Math.max(0.2, s.Ac - 3.5); });
+            anwendenStörung((s) => { s.Ac = Math.max(0.2, s.Ac - 2.8); });
         });
         document.getElementById('removeH3O').addEventListener('click', () => {
-            anwendenStörung((s) => { s.H3O = Math.max(0.2, s.H3O - 3.5); });
+            anwendenStörung((s) => { s.H3O = Math.max(0.2, s.H3O - 2.8); });
         });
         document.getElementById('resetBtn').addEventListener('click', () => {
             nHAc = 10; nH2O = 10; nAc = 5; nH3O = 5;
