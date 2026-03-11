@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Chatelier · 4 Spalten mit Reaktionssymbolen</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #124457 0%, #0b2f3d 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        .main-card {
+            max-width: 1200px;
+            width: 100%;
+            background: #ecf4f9;
+            border-radius: 70px 70px 60px 60px;
+            padding: 30px 25px 40px;
+            box-shadow: 0 30px 35px rgba(0, 20, 25, 0.7), inset 0 2px 8px #c2dae6;
+        }
+        h1 {
+            margin: 0 0 5px 0;
+            font-weight: 600;
+            font-size: 2.5rem;
+            color: #002d3b;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-left: 15px;
+        }
+        .h1-sub {
+            background: #1b6379;
+            color: white;
+            font-size: 1.2rem;
+            padding: 6px 28px;
+            border-radius: 50px;
+        }
+
+        /* === Reaktionskopf MIT Symbolen über den 4 Spalten === */
+        .reaktionskopf {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            background: #9fc9db;
+            padding: 25px 20px;
+            border-radius: 70px;
+            margin: 30px 0 15px 0;
+            box-shadow: 0 7px 0 #487a8d;
+            flex-wrap: wrap;
+        }
+        .kopf-item {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: #fff3da;
+            padding: 10px 35px;
+            border-radius: 60px;
+            box-shadow: inset 0 -5px 0 #af8f58;
+            text-align: center;
+            min-width: 120px;
+        }
+        .kopf-symbol {
+            font-size: 3.2rem;
+            font-weight: 500;
+            color: #022d39;
+            filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.2));
+        }
+
+        /* Container für die vier Kugelspalten (vertikal) */
+        .vier-spalten {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            background: #19566d;
+            border-radius: 80px;
+            padding: 30px 15px;
+            margin: 5px 0 25px;
+            box-shadow: inset 0 0 0 4px #86b6c7, 0 18px 20px rgba(0,0,0,0.4);
+            flex-wrap: wrap;
+        }
+
+        .spalte {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 130px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 60px;
+            padding: 20px 5px;
+        }
+        .spalten-label {
+            font-size: 2rem;
+            font-weight: 700;
+            background: #ddf1fb;
+            padding: 8px 30px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            color: #013845;
+            box-shadow: 0 4px 0 #35748b;
+            width: 100%;
+            text-align: center;
+        }
+        .kugel-stapel {
+            display: flex;
+            flex-direction: column-reverse;  /* Kugeln wachsen nach oben */
+            align-items: center;
+            gap: 6px;
+            min-height: 320px;
+            justify-content: flex-start;
+            background: rgba(255,255,250,0.2);
+            border-radius: 50px;
+            padding: 15px 8px;
+            width: 85px;
+        }
+
+        .kugel {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            box-shadow: 0 7px 0 rgba(0, 0, 0, 0.25), 0 0 0 3px white;
+            transition: all 0.1s;
+            flex-shrink: 0;
+        }
+        .kugel.HAc { background-color: #c95f2b; }  /* Essigsäure */
+        .kugel.H2O { background-color: #f7d973; }  /* Wasser */
+        .kugel.Ac  { background-color: #409d87; }  /* Acetat */
+        .kugel.H3O { background-color: #3f7fb0; }  /* Hydronium */
+
+        .zaehler-text {
+            margin-top: 20px;
+            font-size: 1.6rem;
+            background: #154e60;
+            color: white;
+            padding: 5px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+
+        .steuerpanel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin: 25px 0 20px;
+        }
+        .btn {
+            border: none;
+            border-radius: 50px;
+            padding: 14px 22px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: white;
+            box-shadow: 0 5px 0 0 #6f95a5, 0 7px 12px rgba(0,30,30,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.06s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 0 #507987, 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .btn.zugabe { background: #d0f0cc; color: #1f6840; }
+        .btn.entnahme { background: #fbd1d1; color: #b13b3b; }
+
+        .reset-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 0;
+        }
+        .reset-btn {
+            background: #fedb9f;
+            border: none;
+            font-size: 1.6rem;
+            padding: 16px 60px;
+            border-radius: 70px;
+            font-weight: 600;
+            box-shadow: 0 7px 0 #b48d56;
+            cursor: pointer;
+            transition: 0.05s;
+        }
+        .reset-btn:active {
+            transform: translateY(7px);
+            box-shadow: none;
+        }
+
+        .fussnote {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            color: #0f485a;
+            font-weight: 550;
+        }
+    </style>
+</head>
+<body>
+<div class="main-card">
+    <h1>
+        ⚖️ Le Chatelier · HAc + H₂O ⇌ Ac⁻ + H₃O⁺
+        <span class="h1-sub">Kugeln in 4 Spalten</span>
+    </h1>
+
+    <!-- Reaktionssymbole ÜBER den vier Spalten (Plus und Gleichgewicht) -->
+    <div class="reaktionskopf">
+        <div class="kopf-item">HAc</div>
+        <div class="kopf-symbol">+</div>
+        <div class="kopf-item">H₂O</div>
+        <div class="kopf-symbol">⇌</div>
+        <div class="kopf-item">Ac⁻</div>
+        <div class="kopf-symbol">+</div>
+        <div class="kopf-item">H₃O⁺</div>
+    </div>
+
+    <!-- Vier vertikale Spalten für die Kugeln (genau unter den Symbolen) -->
+    <div class="vier-spalten">
+        <!-- Spalte 1: HAc -->
+        <div class="spalte">
+            <div class="spalten-label">HAc</div>
+            <div class="kugel-stapel" id="stapelHAc"></div>
+            <div class="zaehler-text" id="zaehlerHAc">0</div>
+        </div>
+        <!-- Spalte 2: H2O -->
+        <div class="spalte">
+            <div class="spalten-label">H₂O</div>
+            <div class="kugel-stapel" id="stapelH2O"></div>
+            <div class="zaehler-text" id="zaehlerH2O">0</div>
+        </div>
+        <!-- Spalte 3: Ac⁻ -->
+        <div class="spalte">
+            <div class="spalten-label">Ac⁻</div>
+            <div class="kugel-stapel" id="stapelAc"></div>
+            <div class="zaehler-text" id="zaehlerAc">0</div>
+        </div>
+        <!-- Spalte 4: H3O⁺ -->
+        <div class="spalte">
+            <div class="spalten-label">H₃O⁺</div>
+            <div class="kugel-stapel" id="stapelH3O"></div>
+            <div class="zaehler-text" id="zaehlerH3O">0</div>
+        </div>
+    </div>
+
+    <!-- Steuerung: Zugabe / Entnahme pro Teilchen -->
+    <div class="steuerpanel">
+        <button class="btn zugabe" id="addHAc">➕ HAc</button>
+        <button class="btn zugabe" id="addH2O">➕ H₂O</button>
+        <button class="btn zugabe" id="addAc">➕ Ac⁻</button>
+        <button class="btn zugabe" id="addH3O">➕ H₃O⁺</button>
+        <button class="btn entnahme" id="removeHAc">➖ HAc</button>
+        <button class="btn entnahme" id="removeH2O">➖ H₂O</button>
+        <button class="btn entnahme" id="removeAc">➖ Ac⁻</button>
+        <button class="btn entnahme" id="removeH3O">➖ H₃O⁺</button>
+    </div>
+
+    <div class="reset-container">
+        <button class="reset-btn" id="resetBtn">↺ Start: 10 · 10 · 5 · 5</button>
+    </div>
+    <div class="fussnote">
+        ⚖️ K<sub>c</sub> = 0.25 · Jede Störung verschiebt das Gleichgewicht (Le Chatelier)
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Anfangskonzentrationen
+        let nHAc = 10;   // Essigsäure
+        let nH2O = 10;   // Wasser
+        let nAc  = 5;    // Acetat
+        let nH3O = 5;    // Hydronium
+
+        const KC = 0.25;  // Gleichgewichtskonstante
+
+        // Runden für Anzeige (ganze Kugeln)
+        function runden(x) {
+            return Math.max(0, Math.round(x));
+        }
+
+        // Alle vier Stapel aktualisieren
+        function rendereAlle() {
+            // HAc
+            const stapelHAc = document.getElementById('stapelHAc');
+            stapelHAc.innerHTML = '';
+            const hacRound = runden(nHAc);
+            for (let i = 0; i < Math.min(hacRound, 30); i++) {
+                let k = document.createElement('div');
+                k.className = 'kugel HAc';
+                stapelHAc.appendChild(k);
+            }
+            if (hacRound > 30) {
+                let mehr = document.createElement('div');
+                mehr.textContent = '+' + (hacRound - 30);
+                mehr.style.fontSize = '1.4rem';
+                mehr.style.background = '#222e';
+                mehr.style.color = 'white';
+                mehr.style.padding = '4px 14px';
+                mehr.style.borderRadius = '30px';
+                mehr.style.marginTop = '8px';
+                stapelHAc.appendChild(mehr);
+            } else if (hacRound === 0) {
+                let leer = document.createElement('div');
+                leer.textContent = '⛔';
+                leer.style.fontSize = '2.2rem';
+                leer.style.color = '#ccc';
+                stapelHAc.appendChild(leer);
+            }
+            document.getElementById('zaehlerHAc').innerText = hacRound;
+
+            // H2O
+            const stapelH2O = document.getElementById('stapelH2O');
+            stapelH2O.innerHTML = '';
+            const h2oRound = runden(nH2O);
+            for (let i = 0; i < Math.min(h2oRound, 30); i++) {
+                let k = document.createElement('div');
+                k.className = 'kugel H2O';
+                stapelH2O.appendChild(k);
+            }
+            if (h2oRound > 30) {
+                let mehr = document.createElement('div');
+                mehr.textContent = '+' + (h2oRound - 30);
+                mehr.style.fontSize = '1.4rem';
+                mehr.style.background = '#222e';
+                mehr.style.color = 'white';
+                mehr.style.padding = '4px 14px';
+                mehr.style.borderRadius = '30px';
+                mehr.style.marginTop = '8px';
+                stapelH2O.appendChild(mehr);
+            } else if (h2oRound === 0) {
+                let leer = document.createElement('div');
+                leer.textContent = '⛔';
+                leer.style.fontSize = '2.2rem';
+                leer.style.color = '#ccc';
+                stapelH2O.appendChild(leer);
+            }
+            document.getElementById('zaehlerH2O').innerText = h2oRound;
+
+            // Ac⁻
+            const stapelAc = document.getElementById('stapelAc');
+            stapelAc.innerHTML = '';
+            const acRound = runden(nAc);
+            for (let i = 0; i < Math.min(acRound, 30); i++) {
+                let k = document.createElement('div');
+                k.className = 'kugel Ac';
+                stapelAc.appendChild(k);
+            }
+            if (acRound > 30) {
+                let mehr = document.createElement('div');
+                mehr.textContent = '+' + (acRound - 30);
+                mehr.style.fontSize = '1.4rem';
+                mehr.style.background = '#222e';
+                mehr.style.color = 'white';
+                mehr.style.padding = '4px 14px';
+                mehr.style.borderRadius = '30px';
+                mehr.style.marginTop = '8px';
+                stapelAc.appendChild(mehr);
+            } else if (acRound === 0) {
+                let leer = document.createElement('div');
+                leer.textContent = '⛔';
+                leer.style.fontSize = '2.2rem';
+                leer.style.color = '#ccc';
+                stapelAc.appendChild(leer);
+            }
+            document.getElementById('zaehlerAc').innerText = acRound;
+
+            // H3O⁺
+            const stapelH3O = document.getElementById('stapelH3O');
+            stapelH3O.innerHTML = '';
+            const h3oRound = runden(nH3O);
+            for (let i = 0; i < Math.min(h3oRound, 30); i++) {
+                let k = document.createElement('div');
+                k.className = 'kugel H3O';
+                stapelH3O.appendChild(k);
+            }
+            if (h3oRound > 30) {
+                let mehr = document.createElement('div');
+                mehr.textContent = '+' + (h3oRound - 30);
+                mehr.style.fontSize = '1.4rem';
+                mehr.style.background = '#222e';
+                mehr.style.color = 'white';
+                mehr.style.padding = '4px 14px';
+                mehr.style.borderRadius = '30px';
+                mehr.style.marginTop = '8px';
+                stapelH3O.appendChild(mehr);
+            } else if (h3oRound === 0) {
+                let leer = document.createElement('div');
+                leer.textContent = '⛔';
+                leer.style.fontSize = '2.2rem';
+                leer.style.color = '#ccc';
+                stapelH3O.appendChild(leer);
+            }
+            document.getElementById('zaehlerH3O').innerText = h3oRound;
+        }
+
+        // Gleichgewichts-Relaxation (Le Chatelier)
+        function relaxToEquilibrium(HAc, H2O, Ac, H3O) {
+            let a = Math.max(0.1, HAc);
+            let b = Math.max(0.1, H2O);
+            let c = Math.max(0.1, Ac);
+            let d = Math.max(0.1, H3O);
+
+            const step = 0.22;
+            const tolerance = 0.002;
+            for (let i = 0; i < 400; i++) {
+                let Q = (c * d) / (a * b);
+                if (Math.abs(Q - KC) < tolerance) break;
+
+                if (Q > KC) { 
+                    // Rückreaktion: Ac + H3O → HAc + H2O
+                    let delta = Math.min(step, c * 0.4, d * 0.4);
+                    a += delta;
+                    b += delta;
+                    c -= delta;
+                    d -= delta;
+                } else { 
+                    // Hinreaktion: HAc + H2O → Ac + H3O
+                    let delta = Math.min(step, a * 0.4, b * 0.4);
+                    a -= delta;
+                    b -= delta;
+                    c += delta;
+                    d += delta;
+                }
+                a = Math.max(0.1, a);
+                b = Math.max(0.1, b);
+                c = Math.max(0.1, c);
+                d = Math.max(0.1, d);
+            }
+            return { HAc: a, H2O: b, Ac: c, H3O: d };
+        }
+
+        // Störung + Relaxation + Rendern
+        function anwendenStörung(modifyFn) {
+            let state = { HAc: nHAc, H2O: nH2O, Ac: nAc, H3O: nH3O };
+            modifyFn(state);
+            state.HAc = Math.max(0.1, state.HAc);
+            state.H2O = Math.max(0.1, state.H2O);
+            state.Ac = Math.max(0.1, state.Ac);
+            state.H3O = Math.max(0.1, state.H3O);
+
+            let equil = relaxToEquilibrium(state.HAc, state.H2O, state.Ac, state.H3O);
+            nHAc = equil.HAc;
+            nH2O = equil.H2O;
+            nAc = equil.Ac;
+            nH3O = equil.H3O;
+            rendereAlle();
+        }
+
+        // Event Listener
+        document.getElementById('addHAc').addEventListener('click', () => {
+            anwendenStörung((s) => { s.HAc += 4.0; });
+        });
+        document.getElementById('addH2O').addEventListener('click', () => {
+            anwendenStörung((s) => { s.H2O += 4.0; });
+        });
+        document.getElementById('addAc').addEventListener('click', () => {
+            anwendenStörung((s) => { s.Ac += 4.0; });
+        });
+        document.getElementById('addH3O').addEventListener('click', () => {
+            anwendenStörung((s) => { s.H3O += 4.0; });
+        });
+        document.getElementById('removeHAc').addEventListener('click', () => {
+            anwendenStörung((s) => { s.HAc = Math.max(0.2, s.HAc - 3.5); });
+        });
+        document.getElementById('removeH2O').addEventListener('click', () => {
+            anwendenStörung((s) => { s.H2O = Math.max(0.2, s.H2O - 3.5); });
+        });
+        document.getElementById('removeAc').addEventListener('click', () => {
+            anwendenStörung((s) => { s.Ac = Math.max(0.2, s.Ac - 3.5); });
+        });
+        document.getElementById('removeH3O').addEventListener('click', () => {
+            anwendenStörung((s) => { s.H3O = Math.max(0.2, s.H3O - 3.5); });
+        });
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            nHAc = 10; nH2O = 10; nAc = 5; nH3O = 5;
+            rendereAlle();
+        });
+
+        // Initial anzeigen
+        rendereAlle();
+    })();
+</script>
+</body>
+</html>
